@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$('document').ready(function(){
+			$.getJSON( "getPriceMatrix", function( data ) {
+				$.each( data, function( key, val ) {
+					if(val[2] === 'fpk')
+						$('#myTable > tbody:last').append('<tr class="fpk"><td>'+val[0]+'</td><td>'+val[1]+'</td><td>'+val[2]+'</td></tr>');
+					else
+						$('#myTable > tbody:last').append('<tr class="ama"><td>'+val[0]+'</td><td>'+val[1]+'</td><td>'+val[2]+'</td></tr>');
+	
+				});
+			});
+		})
+	</script>
+	<style type="text/css">
+		#myTable{
+			width: 100%;
+		}
+		#myTable .fpk {
+			background-color: #F3F3F3;
+		}
+	</style>
+  </head>
+  <body>
+  	<a href="/priceWatch">price watch</a>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+	<table id="myTable">
+		<tbody>
+		</tbody>
+	</table>
+  </body>
+</html>
