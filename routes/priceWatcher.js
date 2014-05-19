@@ -1,7 +1,9 @@
 var request = require('request');
 var priceMatrix = undefined;
 var matrixSize = 10000;
-var chkingTimeout = 1000*60*60*6;			//chk every 6 hours
+var chkingTimeout = 1000*60*60;			//chk every hour
+var ownURL = "http://dontdostupidtasks.herokuapp.com/priceWatch";
+
 exports.priceWatch = function(req, res){
 	if(priceMatrix === undefined){
 		priceMatrix = new Array();
@@ -22,6 +24,14 @@ function updatePrices(){
 	var re = /<span id=\"actualPriceValue\">.*<\/span>/
 	scrapPrice(amazonProductURL, re, updatePriceCallback, 'ama');
 	setTimeout(updatePrices, chkingTimeout);
+	setTimeout(function(){
+		request(ownURL, function(error, res,html){
+			if(!error)
+				console.log("toched:"+ownURL);
+			else
+				console.log(error);
+		});
+	}, 1000*60*50);									// touch self every 50minutes to refrain from sleeping
 }
 
 function updatePriceCallback(price, type){
