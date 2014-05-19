@@ -40,8 +40,10 @@ function touchSelf(){
 function updatePriceCallback(price, type){
 	price = price.replace(/,/,'');					//clean the price
 	console.log("new entry:"+price+type);
-	var today = new Date();
-	priceMatrix.push([today.getDate()+"/"+(parseInt(today.getMonth())+1)+"@"+today.getHours()+":"+today.getMinutes(), price, type]);
+	var d = new Date();
+	var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+	var nd = new Date(utc + (3600000*(5.5)));					//offset is 5.5 for bombay
+	priceMatrix.push([nd.getDate()+"/"+(parseInt(nd.getMonth())+1)+"@"+nd.getHours()+":"+nd.getMinutes(), price, type]);
 	if(priceMatrix.length > matrixSize)
 		priceMatrix.pop();
 	console.log(priceMatrix);
