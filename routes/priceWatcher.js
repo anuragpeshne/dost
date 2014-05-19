@@ -24,14 +24,17 @@ function updatePrices(){
 	var re = /<span id=\"actualPriceValue\">.*<\/span>/
 	scrapPrice(amazonProductURL, re, updatePriceCallback, 'ama');
 	setTimeout(updatePrices, chkingTimeout);
-	setTimeout(function(){
-		request(ownURL, function(error, res,html){
+	touchSelf();
+}
+
+function touchSelf(){
+	request(ownURL, function(error, res,html){
 			if(!error)
 				console.log("toched:"+ownURL);
 			else
 				console.log(error);
 		});
-	}, 1000*60*50);									// touch self every 50minutes to refrain from sleeping
+	setTimeout(touchSelf, 1000*60*50);									// touch self every 50minutes to refrain from sleeping
 }
 
 function updatePriceCallback(price, type){
