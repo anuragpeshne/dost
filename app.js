@@ -35,7 +35,11 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/priceWatch', watcher.priceWatch);
 app.get('/getPriceMatrix', watcher.sendPriceMatrix);
+app.get('/getBombMatrix', watcher.sendBombMatrix);
 app.get('/users', user.list);
+
+watcher.updatePrices();				//start recording prices
+watcher.startBombarding();
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

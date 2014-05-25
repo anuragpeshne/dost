@@ -10,10 +10,14 @@
 				$.each( data, function( key, val ) {
 					if(val[2] === 'fpk')
 						$('#myTable > tbody:last').append('<tr class="fpk"><td>'+val[0]+'</td><td>'+val[1]+'</td><td>'+val[2]+'</td></tr>');
-					else
+					else if(val[2] === 'ama')
 						$('#myTable > tbody:last').append('<tr class="ama"><td>'+val[0]+'</td><td>'+val[1]+'</td><td>'+val[2]+'</td></tr>');
-	
 				});
+			});
+			$.getJSON("getBombMatrix", function(data) {
+				$.each(data, function(key, val){
+					$('#bombardTable > tbody:last').append('<tr class="`bomb"><td>'+val[0]+'</td><td>'+val[1]+'</td><td>'+val[2]+'</td></tr>');
+				})
 			});
 		})
 	</script>
@@ -24,6 +28,9 @@
 		#myTable .fpk {
 			background-color: #F3F3F3;
 		}
+		#bombardTable {
+			width: 100%;
+		}
 	</style>
   </head>
   <body>
@@ -31,6 +38,10 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
 	<table id="myTable">
+		<tbody>
+		</tbody>
+	</table>
+	<table id="bombardTable">
 		<tbody>
 		</tbody>
 	</table>
